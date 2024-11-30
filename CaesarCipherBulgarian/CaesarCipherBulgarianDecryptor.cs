@@ -10,41 +10,43 @@
 
         public static void PrintAllCaesarCipherPossibilities(string cipheredText)
         {
-            if (!String.IsNullOrWhiteSpace(cipheredText))
-            {
-                StringBuilder decipheredTextPossibilitiesStringBuilder = new StringBuilder();
-                decipheredTextPossibilitiesStringBuilder.AppendLine("Възможни варианти за оригиналния текст:");
-
-                for (int i = 1; i < bulgarianAlphabetCharArray.Count; i++)
-                {
-                    foreach (char character in cipheredText)
-                    {
-                        if (bulgarianAlphabetCharArray.Contains(character))
-                        {
-                            int currentCharIndex = bulgarianAlphabetCharArray.IndexOf(character);
-                            decipheredTextPossibilitiesStringBuilder.Append(bulgarianAlphabetCharArray[(currentCharIndex + i) % bulgarianAlphabetCharArray.Count]);
-                        }
-                        else if (character == ' ')
-                        {
-                            decipheredTextPossibilitiesStringBuilder.Append(character);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Текстът съдържа символ, който не е от българската азбука!");
-                            break;
-                        }
-                    }
-
-                    decipheredTextPossibilitiesStringBuilder.AppendLine();
-                }
-
-                string decipheredTextPossibilities = decipheredTextPossibilitiesStringBuilder.ToString();
-                Console.WriteLine(decipheredTextPossibilities);
-            }
-            else
+            if (string.IsNullOrWhiteSpace(cipheredText))
             {
                 Console.WriteLine("Празен текст!");
+                
+                return;
             }
+            
+            StringBuilder decipheredTextPossibilitiesStringBuilder = new();
+            decipheredTextPossibilitiesStringBuilder.AppendLine("Възможни варианти за оригиналния текст:");
+
+            for (int i = 1; i < bulgarianAlphabetCharArray.Count; i++)
+            {
+                foreach (char character in cipheredText)
+                {
+                    if (bulgarianAlphabetCharArray.Contains(character))
+                    {
+                        int currentCharacterIndex = bulgarianAlphabetCharArray.IndexOf(character);
+                        char currentCharacter = 
+                            bulgarianAlphabetCharArray[(currentCharacterIndex + i) % bulgarianAlphabetCharArray.Count];
+                        decipheredTextPossibilitiesStringBuilder.Append(currentCharacter);
+                    }
+                    else if (character == ' ')
+                    {
+                        decipheredTextPossibilitiesStringBuilder.Append(character);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Текстът съдържа символ, който не е от българската азбука!");
+                        break;
+                    }
+                }
+
+                decipheredTextPossibilitiesStringBuilder.AppendLine();
+            }
+
+            string decipheredTextPossibilities = decipheredTextPossibilitiesStringBuilder.ToString();
+            Console.WriteLine(decipheredTextPossibilities);
         }
     }
 }
